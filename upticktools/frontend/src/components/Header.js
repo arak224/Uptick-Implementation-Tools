@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Header = ({ onLoginClick, onBackHomeClick }) => (
     <header className="bg-[rgb(21,8,36)] fixed top-2 left-2 right-2 flex justify-between items-center p-4 rounded-b-lg rounded-t-lg z-10">
-        <Link to="/" onClick={onBackHomeClick} className='flex items-center space-x-4 bg-[#150824] hover:bg-[#a8acb3] hover:bg-opacity-50 transition border-300 p-2 rounded-md'>
+        <Link to="/home" onClick={onBackHomeClick} className='flex items-center space-x-4 bg-[#150824] hover:bg-[#a8acb3] hover:bg-opacity-50 transition border-300 p-2 rounded-md'>
             <img src="https://pdf-background-images.s3.us-east-2.amazonaws.com/logo.png" alt="Logo" className="h-10" />
             <span className='text-white font-montserrat text-lg'>Onboarding Tools</span>
         </Link>

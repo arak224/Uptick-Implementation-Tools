@@ -1,6 +1,6 @@
 const LoginForm = () => {
     return (
-        <form className="flex flex-col">
+        <form className="flex flex-col min-h-[80vh] ">
             <div className="mb-4">
                 <label className="block text-white font-montserrat mb-2">Email</label>
                 <input type="email" placeholder="Enter your email" className="w-full p-3 rounded-md bg-[#150824] border border-[#a8acb3] text-white focus:outline-none focus:ring-2 focus:ring-[#ff5002]" />

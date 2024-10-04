@@ -23,11 +23,8 @@ const LoginPage = () => {
         >
             <Header />
             <section className="flex flex-grow justify-center items-center">
-                <div className="content-container bg-[#150824] bg-opacity-40 p-10 rounded-lg w-[600px]">
+                <div className="content-container bg-[#150824] bg-opacity-40 p-10 rounded-lg w-[600px] h-500px">
                     <LoginForm />
-                    <button onClick={handleLogin} className='bg-[#150824] text-white px-4 py-2 rounded-md mt-4'>
-                        Log In
-                    </button>
                 </div>
             </section>
         </motion.div>
