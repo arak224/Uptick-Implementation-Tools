@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "apps.Service_Trade_Exporter.apps.ServiceTradeExporterConfig",
-    "apps.homepage.apps.HomepageConfig", 
+    "apps.Navigator.apps.NavigatorConfig", 
 ]
 
 
