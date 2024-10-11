@@ -10,6 +10,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://austinrakowski224:SkoDucks
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+test
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
