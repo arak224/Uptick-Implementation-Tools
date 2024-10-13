@@ -58,21 +58,6 @@ const SignUpForm = ({ setIsLoggedIn }) => { // Receiving setIsLoggedIn from prop
     
         try {
             
-            const user_exists = await fetch('http://127.0.0.1:5000/existing_user', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                // Access the email property directly
-                body: JSON.stringify({ email: userData.email }) // Wrap the email in an object
-            });
-
-            if (!user_exists.ok) {
-                const errorData = await user_exists.json();
-                setErrorMessage(errorData.message || 'User Already Exists');
-                return;
-            }
-            
             const create_response = await fetch('http://127.0.0.1:5000/create_user', {
                 method: 'POST',
                 headers: {
@@ -93,7 +78,7 @@ const SignUpForm = ({ setIsLoggedIn }) => { // Receiving setIsLoggedIn from prop
 
         } catch (error) {
             console.error('Error during signup:', error);
-            setErrorMessage('An unexpected error occurred. Please try again later.');
+            setErrorMessage('A user with this email already exists. Please log in');
         }
     };
 

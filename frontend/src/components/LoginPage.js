@@ -8,9 +8,9 @@ const LoginPage = ({ onLoginSuccess }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
-    
     const navigate = useNavigate();
+
+
     const handleLogin = async (event) => {
         event.preventDefault()
 
@@ -19,10 +19,9 @@ const LoginPage = ({ onLoginSuccess }) => {
             'password':password
         }
 
-
         try {
             // Send a POST request to the Django backend
-            const response = fetch('http://127.0.0.1:5000/login', {
+            const response = await fetch('http://127.0.0.1:5000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -31,8 +30,8 @@ const LoginPage = ({ onLoginSuccess }) => {
             });
 
             if (!response.ok) {
-                const errorData = 'Username or password not found.'
-                setErrorMessage(errorData.message || 'Username or password not found.');
+                const errorData = await response.json();
+                setErrorMessage(errorData.message);
                 return;
             }
 
