@@ -12,7 +12,6 @@ const App = () => {
 
     const navigate = useNavigate();
 
-
     const onLoginClick = () => {
         console.log('Login button clicked');;
         navigate('/login')

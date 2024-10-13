@@ -51,7 +51,7 @@ const AnimatedRoutes = ({ setIsLoggedIn }) => {
                         variants={variants}
                         transition={{ duration: 0.5 }}
                     >
-                        <LoginPage />
+                        <LoginPage onLoginSuccess/>
                     </motion.div>
                 }
             />
