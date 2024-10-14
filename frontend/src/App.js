@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, useNavigate } from 'react-router-dom';
+import React, { useState} from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Header from './components/Header';
 import AnimatedRoutes from './components/AnimatedRoutes';
 import './styles/App.css';
@@ -7,43 +7,23 @@ import './styles/App.css';
 const App = () => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [email, setEmail] = useState('');
-    
+    const [username, setUsername] = useState('');
+    const [Company, setCompany] = useState('');
 
-    const navigate = useNavigate();
-
-    const onLoginClick = () => {
-        console.log('Login button clicked');;
-        navigate('/login')
-    };
-
-    const onBackHomeClick = () => {
-        navigate('/home');
-    };
-
-    const onSignUpClick = () => {
-        console.log('Sign up button clicked');
-        navigate('/signup')
-    };
-
-    const onLogout = () => {
-        console.log('User logged out');
-        setIsLoggedIn(false);
-        setEmail('');
-    };
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-[#ff5002] to-[#150824]">
             <Header 
-                onLoginClick={onLoginClick}
-                onBackHomeClick={onBackHomeClick}
-                onSignUpClick={onSignUpClick}
                 isLoggedIn={isLoggedIn}
-                email={email}
-                onLogout={onLogout}
+                username={username}
+                setIsLoggedIn={setIsLoggedIn}
+                setUsername={setUsername}
+                setCompany={setCompany}
+                Company={Company}
+
             />
             <div className="pt-20 flex flex-col items-center justify-center min-h-screen"> {/* Add padding to prevent overlap with fixed header */}
-                <AnimatedRoutes setIsLoggedIn={setIsLoggedIn} />
+                <AnimatedRoutes isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setCompany={setCompany} Company={Company}/>
             </div>
         </div>
     );

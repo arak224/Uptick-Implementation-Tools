@@ -4,9 +4,12 @@ import Homepage from './Homepage';
 import LoginPage from './LoginPage';
 import SignUpForm from './SignUpForm';
 import STLogin from './STlogin';
+import Datapack from './Datapack';
+import { Navigate } from 'react-router-dom';
 
-const AnimatedRoutes = ({ setIsLoggedIn }) => {
+const AnimatedRoutes = ({ isLoggedIn, setIsLoggedIn, setUsername, setCompany, Company}) => {
     const location = useLocation();
+
 
     const variants = {
         initial: (direction) => ({
@@ -36,7 +39,7 @@ const AnimatedRoutes = ({ setIsLoggedIn }) => {
                         variants={variants}
                         transition={{ duration: 0.5 }}
                     >
-                        <Homepage />
+                        <Homepage isLoggedIn={isLoggedIn}/>
                     </motion.div>
                 }
             />
@@ -51,7 +54,7 @@ const AnimatedRoutes = ({ setIsLoggedIn }) => {
                         variants={variants}
                         transition={{ duration: 0.5 }}
                     >
-                        <LoginPage onLoginSuccess/>
+                        <LoginPage setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setCompany={setCompany} Company={Company}/>
                     </motion.div>
                 }
             />
@@ -66,7 +69,7 @@ const AnimatedRoutes = ({ setIsLoggedIn }) => {
                         variants={variants}
                         transition={{ duration: 0.5 }}
                     >
-                        <STLogin/>
+                        <STLogin />
                     </motion.div>
                 }
             />
@@ -82,11 +85,25 @@ const AnimatedRoutes = ({ setIsLoggedIn }) => {
                         transition={{ duration: 0.5 }}
                     >
                         <SignUpForm setIsLoggedIn={setIsLoggedIn} />
-                        
                     </motion.div>
                 }
             />
-            <Route path="/" element={<Homepage />} /> {/* Default route */}
+            <Route
+                path="/us-data-pack"
+                element={
+                    <motion.div
+                        custom={1}
+                        initial="initial"
+                        animate="enter"
+                        exit="exit"
+                        variants={variants}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <Datapack />
+                    </motion.div>
+                }
+            />
+            <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect root to /home */}
         </Routes>
     );
 };

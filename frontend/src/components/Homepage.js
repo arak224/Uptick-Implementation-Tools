@@ -26,7 +26,7 @@ const AvailableTools = ({ isLoggedIn }) => {
             console.log('loggedin')
         } else {
             navigate('/login')
-            console.log()
+            console.log('not logged in')
         }
 
     };
@@ -41,7 +41,7 @@ const AvailableTools = ({ isLoggedIn }) => {
 );
 }
 
-const Homepage = () => {
+const Homepage = ( { isLoggedIn } ) => {
     return (
         <motion.div
             initial={{ x: 0, opacity: 1 }}
@@ -52,7 +52,7 @@ const Homepage = () => {
             <div className="content-container bg-[#150824] bg-opacity-40 pt-12 pb-8 rounded-lg h-[60vh] w-[80vw] max-w-7xl">
                 <div className="button-containe pb-5 vh-[70vh] rounded-lg max-w-4xl flex flex-col items-center justify-center mx-auto">
                     <h3 className="font-montserrat text-white text-5xl text-center mt-14">Available Tools</h3>
-                    <AvailableTools />
+                    <AvailableTools isLoggedIn = {isLoggedIn} />
                 </div>
             </div>
         </motion.div>

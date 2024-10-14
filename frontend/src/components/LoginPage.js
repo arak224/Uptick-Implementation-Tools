@@ -3,12 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
 
 
-const LoginPage = ({ onLoginSuccess }) => {
+const LoginPage = ({ setIsLoggedIn, setUsername, setCompany, Company}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const [companyResponse, setCompanyResponse] = useState('');
+
+    const onLoginSuccess = (userEmail) => {
+        setIsLoggedIn(true);
+        setUsername(userEmail);
+        navigate('/home');
+        setCompany(companyResponse);
+
+    }
 
 
     const handleLogin = async (event) => {
@@ -34,8 +43,10 @@ const LoginPage = ({ onLoginSuccess }) => {
                 setErrorMessage(errorData.message);
                 return;
             }
+            else {
+               setCompanyResponse(await response.json('company'));
 
-            onLoginSuccess();
+            onLoginSuccess(email);}
 
         } catch (error) {
             console.error('Error during signup:', error);
