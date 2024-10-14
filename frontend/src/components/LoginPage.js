@@ -3,20 +3,25 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
 
 
-const LoginPage = ({ setIsLoggedIn, setUsername, setCompany, Company}) => {
+const LoginPage = ({ setIsLoggedIn, setUsername, setCompany, Company, DesiredPath, SetDesiredPath}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
     const [companyResponse, setCompanyResponse] = useState('');
-
+   
+   
     const onLoginSuccess = (userEmail) => {
         setIsLoggedIn(true);
         setUsername(userEmail);
-        navigate('/home');
+        if (DesiredPath === '/login') {
+            navigate('/home');
+        } else {
+            navigate(DesiredPath);
+        }
         setCompany(companyResponse);
-
+        SetDesiredPath(''); // Clear the value in DesiredPath
     }
 
 

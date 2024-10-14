@@ -6,22 +6,23 @@ const Header = ({
     username, 
     setUsername, 
     setCompany,
-    Company
+    Company,
+    fixedHeader
 }) => {
 
     const printCompany = () => {
-        console.log(Company);}
+        console.log(Company);
+    };
 
     const navigate = useNavigate();
 
     const onLoginClick = () => {
-        ;;
-        navigate('/login')
+        navigate('/login');
     };
 
     const onSignUpClick = () => {
         console.log('Sign up button clicked');
-        navigate('/signup')
+        navigate('/signup');
     };
 
     const onLogout = () => {
@@ -43,7 +44,7 @@ const Header = ({
     };
 
     return (
-        <header className="bg-[rgb(21,8,36)] fixed top-2 left-2 right-2 flex justify-between items-center p-4 rounded-b-lg rounded-t-lg z-10">
+        <header className={`bg-[rgb(21,8,36)] ${fixedHeader ? 'fixed top-2 left-2 right-2' : 'relative'} flex justify-between items-center p-4 rounded-b-lg rounded-t-lg z-10`}>
             <button 
                 onClick={handleBackHomeClick} 
                 className='flex items-center space-x-4 bg-[#150824] hover:bg-[#a8acb3] hover:bg-opacity-50 transition border-300 p-2 rounded-md'>
@@ -51,9 +52,8 @@ const Header = ({
                 <span className='text-white font-montserrat text-lg'>Onboarding Tools</span>
             </button>
             
-            <button onClick={printCompany} className="bg-[#2d23e3] hover:bg-[#a8acb3] hover:bg-opacity-50 transition border-300 p-2 rounded-md"></button>
+            <button onClick={printCompany} className=" hover:bg-[#a8acb3] hover:bg-opacity-50 transition border-300 p-2 rounded-md"></button>
 
-            
             <div className="flex space-x-4">
                 {isLoggedIn ? (
                     <>

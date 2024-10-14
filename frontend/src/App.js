@@ -9,21 +9,33 @@ const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
     const [Company, setCompany] = useState('');
+    const [DesiredPath, setDesiredPath] = useState('');
+    const [fixedHeader, setFixedHeader] = useState(true);
 
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-[#ff5002] to-[#150824]">
-            <Header 
-                isLoggedIn={isLoggedIn}
-                username={username}
-                setIsLoggedIn={setIsLoggedIn}
-                setUsername={setUsername}
-                setCompany={setCompany}
-                Company={Company}
-
-            />
-            <div className="pt-20 flex flex-col items-center justify-center min-h-screen"> {/* Add padding to prevent overlap with fixed header */}
-                <AnimatedRoutes isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setCompany={setCompany} Company={Company}/>
+            {fixedHeader && (
+                <Header 
+                    isLoggedIn={isLoggedIn}
+                    username={username}
+                    setIsLoggedIn={setIsLoggedIn}
+                    setUsername={setUsername}
+                    setCompany={setCompany}
+                    Company={Company}
+                    fixedHeader={fixedHeader}
+                />
+            )}
+            <div className="pt-20 flex flex-col items-center justify-center min-h-screen"> 
+                <AnimatedRoutes 
+                isLoggedIn={isLoggedIn} 
+                setIsLoggedIn={setIsLoggedIn} 
+                setUsername={setUsername} 
+                setCompany={setCompany} 
+                Company={Company} 
+                setDesiredPath={setDesiredPath} 
+                DesiredPath={DesiredPath}
+                setFixedHeader={setFixedHeader}/>
             </div>
         </div>
     );
