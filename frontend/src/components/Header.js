@@ -1,18 +1,44 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Header = ({ 
-    onLoginClick, 
-    onBackHomeClick, 
-    onSignUpClick, 
-    isLoggedIn, 
-    email, 
-    onLogout 
+    isLoggedIn,
+    setIsLoggedIn, 
+    username, 
+    setUsername, 
+    setCompany,
+    Company
 }) => {
+
+    const printCompany = () => {
+        console.log(Company);}
+
+    const navigate = useNavigate();
+
+    const onLoginClick = () => {
+        ;;
+        navigate('/login')
+    };
+
+    const onSignUpClick = () => {
+        console.log('Sign up button clicked');
+        navigate('/signup')
+    };
+
+    const onLogout = () => {
+        console.log('User logged out');
+        setIsLoggedIn(false);
+        setUsername('');
+        navigate('/home');
+        setCompany('');
+    };
+
     const location = useLocation();
 
     const handleBackHomeClick = () => {
         if (location.pathname !== '/home') {
-            onBackHomeClick(); // Call the back home function if not already on home page
+            navigate('/home'); 
+        } else {
+            console.log('Already on homepage');
         }
     };
 
@@ -25,10 +51,13 @@ const Header = ({
                 <span className='text-white font-montserrat text-lg'>Onboarding Tools</span>
             </button>
             
+            <button onClick={printCompany} className="bg-[#2d23e3] hover:bg-[#a8acb3] hover:bg-opacity-50 transition border-300 p-2 rounded-md"></button>
+
+            
             <div className="flex space-x-4">
                 {isLoggedIn ? (
                     <>
-                        <span className="text-white font-montserrat">{email}</span>
+                        <span className="text-white font-montserrat text-md rounded-md px-3 py-3 shadow-md transition-transform transform">{username}</span>
                         <button 
                             onClick={onLogout} 
                             className="bg-[#ff5002] bg-opacity-80 text-white font-montserrat font-bold px-5 py-3 rounded-md hover:bg-opacity-100 transition">

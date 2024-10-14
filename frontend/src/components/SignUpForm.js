@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const SignUpForm = ({ setIsLoggedIn }) => { // Receiving setIsLoggedIn from props
     const [firstName, setFirstName] = useState('');
@@ -10,8 +11,44 @@ const SignUpForm = ({ setIsLoggedIn }) => { // Receiving setIsLoggedIn from prop
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState(''); // State for success message
-    
+    const [clients, setClients] = useState([]); // State for storing clients
+    const [dropdownVisible, setDropdownVisible] = useState(false); // State for dropdown visibility
+    const [filteredClients, setFilteredClients] = useState([]); // State for filtered clients
 
+    const fetchClients = async () => {
+        try {
+            const response = await axios.get('http://127.0.0.1:5000/get_accounts');
+            setClients(response.data);
+        } catch (error) {
+            console.error('Error fetching clients:', error);
+        }
+    };
+
+    const handleCompanyFocus = () => {
+        if (clients.length === 0) {
+            fetchClients();
+        }
+    };
+
+    const handleCompanyChange = (e) => {
+        const input = e.target.value;
+        setCompany(input);
+
+        if (input.length >= 3) {
+            const filtered = clients.filter(client =>
+                client.toLowerCase().includes(input.toLowerCase())
+            );
+            setFilteredClients(filtered);
+            setDropdownVisible(filtered.length > 0);
+        } else {
+            setDropdownVisible(false);
+        }
+    };
+
+    const handleClientSelect = (client) => {
+        setCompany(client);
+        setDropdownVisible(false);
+    };
 
     const placeholders = {
         'First Name': 'Enter first name',
@@ -21,6 +58,7 @@ const SignUpForm = ({ setIsLoggedIn }) => { // Receiving setIsLoggedIn from prop
         'Password': 'Enter your password',
         'Confirm Password': 'Confirm your password'
     };
+
 
     const navigate = useNavigate();
 
@@ -108,23 +146,33 @@ const SignUpForm = ({ setIsLoggedIn }) => { // Receiving setIsLoggedIn from prop
                                   confirmPassword;
 
                     return (
-                        <div className="mb-2 w-full" key={index}>
+                        <div className="mb-2 w-full relative" key={index}>
                             <label className="block text-white font-montserrat mb-2">{field}</label>
                             <input
                                 type={field.includes('Password') ? 'password' : 'text'}
                                 placeholder={placeholders[field]}
                                 value={value}
+                                onFocus={field === 'Company' ? handleCompanyFocus : null}
                                 onChange={e => {
                                     if (field === 'First Name') setFirstName(e.target.value);
                                     else if (field === 'Last Name') setLastName(e.target.value);
                                     else if (field === 'Email') setEmail(e.target.value);
-                                    else if (field === 'Company') setCompany(e.target.value);
+                                    else if (field === 'Company') handleCompanyChange(e);
                                     else if (field === 'Password') setPassword(e.target.value);
                                     else if (field === 'Confirm Password') setConfirmPassword(e.target.value);
                                 }}
                                 required
                                 className="w-full p-4 rounded-md bg-[#150824] border border-[#a8acb3] text-white focus:outline-none focus:ring-2 focus:ring-[#ff5002] max-w-l"
                             />
+                            {field === 'Company' && dropdownVisible && (
+                                    <ul className="dropdown absolute bg-[#150824] border border-[#ff5002] text-white w-full mt-1 max-h-40 overflow-y-auto z-10">
+                                        {filteredClients.map((client, index) => (
+                                            <li key={index} onClick={() => handleClientSelect(client)} className="p-2 cursor-pointer hover:bg-[#ff5002]">
+                                                {client}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                         </div>
                     );
                 })}
