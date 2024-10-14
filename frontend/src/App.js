@@ -9,7 +9,6 @@ const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
     const [Company, setCompany] = useState('');
-    const [DesiredPath, setDesiredPath] = useState('');
     const [fixedHeader, setFixedHeader] = useState(true);
 
 
@@ -33,8 +32,6 @@ const App = () => {
                 setUsername={setUsername} 
                 setCompany={setCompany} 
                 Company={Company} 
-                setDesiredPath={setDesiredPath} 
-                DesiredPath={DesiredPath}
                 setFixedHeader={setFixedHeader}/>
             </div>
         </div>

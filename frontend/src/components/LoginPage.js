@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
 
 
-const LoginPage = ({ setIsLoggedIn, setUsername, setCompany, Company, DesiredPath, SetDesiredPath}) => {
+const LoginPage = ({ setIsLoggedIn, setUsername, setCompany, Company}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,13 +15,10 @@ const LoginPage = ({ setIsLoggedIn, setUsername, setCompany, Company, DesiredPat
     const onLoginSuccess = (userEmail) => {
         setIsLoggedIn(true);
         setUsername(userEmail);
-        if (DesiredPath === '/login') {
-            navigate('/home');
-        } else {
-            navigate(DesiredPath);
-        }
+        
+        navigate('/home');
+
         setCompany(companyResponse);
-        SetDesiredPath(''); // Clear the value in DesiredPath
     }
 
 

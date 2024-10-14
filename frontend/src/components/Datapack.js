@@ -8,8 +8,12 @@ const Datapack = () => {
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
-        setFile(selectedFile);
-        setPlaceholder(selectedFile.name);
+        if (selectedFile && (selectedFile.type === 'application/vnd.ms-excel' || selectedFile.type === 'text/csv' || selectedFile.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')) {
+            setFile(selectedFile);
+            setPlaceholder(selectedFile.name);
+        } else {
+            alert('Please upload a valid Excel or CSV file.');
+        }
     };
 
     const handleDragOver = (e) => {
@@ -39,15 +43,31 @@ const Datapack = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (file) {
-            // Handle file upload logic here
-            console.log('File uploaded:', file);
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/formsubmission', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    console.log('File uploaded successfully');
+                } else {
+                    console.error('File upload failed');
+                }
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
         } else {
             console.log('No file selected');
         }
     };
+
 
     return (
         <div className="bg-[#150824] bg-opacity-40 p-10 rounded-lg w-[700px] h-[450px] mt-3 grid grid-rows-7 gap3">

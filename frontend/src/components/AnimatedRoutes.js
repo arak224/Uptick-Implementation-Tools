@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react'; // Import useEffect for managing header state
 import Homepage from './Homepage';
 import LoginPage from './LoginPage';
@@ -9,16 +9,24 @@ import Datapack from './Datapack';
 import Joyfill from './JoyfillEditor';
 import { Navigate } from 'react-router-dom';
 
-const AnimatedRoutes = ({ isLoggedIn, setIsLoggedIn, setUsername, setCompany, Company, setFixedHeader, setDesiredPath, DesiredPath}) => {
+const AnimatedRoutes = ({ isLoggedIn, setIsLoggedIn, setUsername, setCompany, Company, setFixedHeader}) => {
     const location = useLocation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (location.pathname === '/form-prep') {
-            setFixedHeader(false);  // Remove fixed header on form-prep page
+            setFixedHeader(false);  
         } else {
-            setFixedHeader(true);  // Set header back to fixed on other routes
+            setFixedHeader(true);  
         }
     }, [location.pathname, setFixedHeader]);
+
+    useEffect(() => {
+        if (!isLoggedIn && location.pathname !== '/login' && location.pathname !== '/signup' && location.pathname !== '/home') {
+            navigate('/login');
+        }
+    }, [isLoggedIn, location, navigate]);
+
 
         
     const variants = {
@@ -37,7 +45,7 @@ const AnimatedRoutes = ({ isLoggedIn, setIsLoggedIn, setUsername, setCompany, Co
     };
 
     return (
-        <Routes location={location} key={location.key}>
+        <Routes location={location} key={location.pathname}>
             <Route
                 path="/home"
                 element={
@@ -49,7 +57,7 @@ const AnimatedRoutes = ({ isLoggedIn, setIsLoggedIn, setUsername, setCompany, Co
                         variants={variants}
                         transition={{ duration: 0.5 }}
                     >
-                        <Homepage isLoggedIn={isLoggedIn} setDesiredPath={setDesiredPath} DesiredPath={DesiredPath}/>
+                        <Homepage Company={Company}/>
                     </motion.div>
                 }
             />
@@ -64,7 +72,7 @@ const AnimatedRoutes = ({ isLoggedIn, setIsLoggedIn, setUsername, setCompany, Co
                         variants={variants}
                         transition={{ duration: 0.5 }}
                     >
-                        <LoginPage setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setCompany={setCompany} Company={Company} SetDesiredPath={setDesiredPath} />
+                        <LoginPage setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setCompany={setCompany} Company={Company} />
                     </motion.div>
                 }
             />

@@ -1,22 +1,11 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-
-const Homepage = ({ isLoggedIn, setDesiredPath, DesiredPath }) => {
+const Homepage = ({ Company }) => {
     const navigate = useNavigate();
 
     const handleNavigation = (path) => {
-        if (isLoggedIn) {
-            navigate(path);
-            console.log('Navigating to: ', path);
-        } else {
-            console.log('i have no idea why logging something here fixes the issue of desired path not getting set')
-            navigate('/login');
-            setDesiredPath(path);
-            setTimeout(() => {
-                console.log(DesiredPath);
-            }, 0);
-        }
+        navigate(path);
     };
 
     // Button component inside Homepage
@@ -43,8 +32,10 @@ const Homepage = ({ isLoggedIn, setDesiredPath, DesiredPath }) => {
                     <h3 className="font-montserrat text-white text-5xl text-center mt-14">Available Tools</h3>
 
                     {/* Replacing AvailableTools with buttons directly */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-24">
-                        <ToolButton label="US Data Pack Upload" onClick={() => handleNavigation('/us-data-pack')} />
+                    <div className="flex flex-wrap justify-center items-center gap-4 mt-24">
+                        {Company.includes("Uptick (internal)") && (
+                            <ToolButton label="US Data Pack Processor" onClick={() => handleNavigation('/us-data-pack')} />
+                        )}
                         <ToolButton label="Prep Forms for Uptick" onClick={() => handleNavigation('/form-prep')} />
                         <ToolButton label="Map Data from Service Trade" onClick={() => handleNavigation('/service-trade-export')} />
                     </div>
