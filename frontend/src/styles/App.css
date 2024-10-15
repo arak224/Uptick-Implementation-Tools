@@ -16,3 +16,32 @@
 .slide-out {
     animation: slideOut 0.5s forwards; 
 }
+
+.dots {
+    display: inline-block;
+    width: 1em;
+    text-align: left;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.dots::after {
+    content: '';
+    display: inline-block;
+    animation: dots .5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% {
+        content: '';
+    }
+    40% {
+        content: '.';
+    }
+    60% {
+        content: '..';
+    }
+    80%, 100% {
+        content: '...';
+    }
+}

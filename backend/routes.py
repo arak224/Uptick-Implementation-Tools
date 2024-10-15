@@ -86,3 +86,21 @@ def init_routes(app):
 
         return jsonify({'message': 'File upload failed'}), 400
 
+    @app.route('/templateupload', methods=['POST'])
+    def form_submission():
+        if 'file' not in request.files:
+            return jsonify({'message': 'No file part in the request'}), 400
+
+        file = request.files['file']
+
+        if file.filename == '':
+            return jsonify({'message': 'No file selected for uploading'}), 400
+
+        if file:
+            # Save the file or process it as needed
+            # For example, save the file to the server
+            file.save(f"/path/to/save/{file.filename}")
+            print(f"File {file.filename} uploaded successfully")
+            return jsonify({'message': 'File uploaded successfully!'}), 200
+
+        return jsonify({'message': 'File upload failed'}), 400
