@@ -20,6 +20,8 @@ const Homepage = ({ Company }) => {
         );
     };
 
+  
+
     return (
         <motion.div
             initial={{ x: 0, opacity: 1 }}

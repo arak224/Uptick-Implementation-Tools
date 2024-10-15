@@ -3,58 +3,60 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
 
 
-const LoginPage = ({ setIsLoggedIn, setUsername, setCompany, Company}) => {
+const LoginPage = ({ setIsLoggedIn, setUsername, setCompany, desiredPath}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
-    const [companyResponse, setCompanyResponse] = useState('');
    
-   
-    const onLoginSuccess = (userEmail) => {
-        setIsLoggedIn(true);
-        setUsername(userEmail);
-        
-        navigate('/home');
+const onLoginSuccess = (userEmail, companyResponse) => {
+    setIsLoggedIn(true);
+    setUsername(userEmail);
+    
+    navigate(desiredPath ? desiredPath : '/home');
+    setCompany(companyResponse);
+    
+    // Wait until company is set and then log it in the console
+    setTimeout(() => {
+        console.log('Company:', companyResponse);
+    }, 0);
+}
 
-        setCompany(companyResponse);
+
+const handleLogin = async (event) => {
+    event.preventDefault()
+
+    const login_data = {
+        'email':email,
+        'password':password
     }
 
+    try {
+        const response = await fetch('http://127.0.0.1:5000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(login_data),
+        });
 
-    const handleLogin = async (event) => {
-        event.preventDefault()
-
-        const login_data = {
-            'email':email,
-            'password':password
+        if (!response.ok) {
+            const errorData = await response.json();
+            setErrorMessage(errorData.message);
+            return;
         }
+        else {
+            const responseData = await response.json();
+            console.log(responseData);
 
-        try {
-            // Send a POST request to the Django backend
-            const response = await fetch('http://127.0.0.1:5000/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(login_data),
-            });
+        onLoginSuccess(email, responseData.company);}
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                setErrorMessage(errorData.message);
-                return;
-            }
-            else {
-               setCompanyResponse(await response.json('company'));
-
-            onLoginSuccess(email);}
-
-        } catch (error) {
-            console.error('Error during signup:', error);
+    } catch (error) {
+        console.error('Error during signin:', error);
             
-        }
-    };
+    }
+};
     
     
 
